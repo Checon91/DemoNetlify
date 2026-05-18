@@ -11,10 +11,16 @@ const emptyData = () => ({
 });
 
 function shouldUseNetlifyBlobs() {
+  if (process.env.USE_NETLIFY_BLOBS === "false") {
+    return false;
+  }
+
   return (
     process.env.USE_NETLIFY_BLOBS === "true" ||
     process.env.NETLIFY === "true" ||
-    Boolean(process.env.NETLIFY_SITE_ID)
+    Boolean(process.env.NETLIFY_SITE_ID) ||
+    Boolean(process.env.AWS_LAMBDA_FUNCTION_NAME) ||
+    Boolean(process.env.AWS_EXECUTION_ENV)
   );
 }
 
@@ -71,6 +77,7 @@ async function updateData(updater) {
 
 module.exports = {
   readData,
+  shouldUseNetlifyBlobs,
   writeData,
   updateData
 };

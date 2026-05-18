@@ -5,7 +5,7 @@ const cors = require("cors");
 const crypto = require("crypto");
 const express = require("express");
 const { createToken, publicUser, verifyToken } = require("./auth");
-const { readData, updateData } = require("./db");
+const { readData, shouldUseNetlifyBlobs, updateData } = require("./db");
 
 const allowedStatuses = new Set(["active", "completed"]);
 const allowedPriorities = new Set(["low", "medium", "high"]);
@@ -81,7 +81,7 @@ function createApp() {
     res.json({
       ok: true,
       service: "PulseDesk API",
-      storage: process.env.USE_NETLIFY_BLOBS === "true" ? "netlify-blobs" : "local-json"
+      storage: shouldUseNetlifyBlobs() ? "netlify-blobs" : "local-json"
     });
   });
 
