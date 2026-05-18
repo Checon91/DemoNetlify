@@ -49,7 +49,7 @@ async function api(path, options = {}) {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || "Request failed.");
+    throw new Error(data.message || "La solicitud fallo.");
   }
 
   return data;
@@ -84,9 +84,9 @@ function showDashboard() {
 function setAuthMode(mode) {
   state.authMode = mode;
   const isRegister = mode === "register";
-  els.authTitle.textContent = isRegister ? "Create account" : "Sign in";
-  els.authSubmit.textContent = isRegister ? "Create account" : "Sign in";
-  els.toggleAuth.textContent = isRegister ? "Sign in instead" : "Create an account";
+  els.authTitle.textContent = isRegister ? "Crear cuenta" : "Iniciar sesion";
+  els.authSubmit.textContent = isRegister ? "Crear cuenta" : "Iniciar sesion";
+  els.toggleAuth.textContent = isRegister ? "Iniciar sesion" : "Crear cuenta";
   els.nameField.hidden = !isRegister;
   els.authMessage.textContent = "";
 }
@@ -105,8 +105,8 @@ function projectFormData() {
 function resetProjectForm() {
   state.editingId = null;
   els.projectForm.reset();
-  els.projectFormTitle.textContent = "Add project";
-  els.projectSubmit.textContent = "Save project";
+  els.projectFormTitle.textContent = "Agregar proyecto";
+  els.projectSubmit.textContent = "Guardar proyecto";
   els.cancelEditButton.hidden = true;
   els.projectMessage.textContent = "";
 }
@@ -118,16 +118,16 @@ function startEdit(project) {
   els.projectForm.priority.value = project.priority;
   els.projectForm.dueDate.value = project.dueDate || "";
   els.projectForm.status.value = project.status;
-  els.projectFormTitle.textContent = "Edit project";
-  els.projectSubmit.textContent = "Update project";
+  els.projectFormTitle.textContent = "Editar proyecto";
+  els.projectSubmit.textContent = "Actualizar proyecto";
   els.cancelEditButton.hidden = false;
   els.projectForm.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function formatDate(value) {
-  if (!value) return "No due date";
+  if (!value) return "Sin fecha limite";
   const date = new Date(`${value}T00:00:00`);
-  return date.toLocaleDateString(undefined, {
+  return date.toLocaleDateString("es-MX", {
     month: "short",
     day: "numeric",
     year: "numeric"
@@ -159,7 +159,7 @@ function renderProjects() {
   if (projects.length === 0) {
     els.projectList.innerHTML = `
       <div class="empty-state">
-        No ${state.filter === "all" ? "" : state.filter} projects yet.
+        ${emptyStateText()}
       </div>
     `;
     return;
@@ -173,24 +173,53 @@ function renderProjects() {
             <div>
               <h3>${escapeHtml(project.title)}</h3>
               <div class="badge-row">
-                <span class="badge ${project.priority}">${project.priority}</span>
-                <span class="badge">${project.status}</span>
+                <span class="badge ${project.priority}">${priorityLabel(project.priority)}</span>
+                <span class="badge">${statusLabel(project.status)}</span>
                 <span class="badge">${formatDate(project.dueDate)}</span>
               </div>
             </div>
             <div class="action-row">
-              <button class="icon-button" type="button" data-action="toggle" title="Toggle status">
-                ${project.status === "completed" ? "Open" : "Done"}
+              <button class="icon-button" type="button" data-action="toggle" title="Cambiar estado">
+                ${project.status === "completed" ? "Abrir" : "Listo"}
               </button>
-              <button class="icon-button" type="button" data-action="edit" title="Edit project">Edit</button>
-              <button class="icon-button" type="button" data-action="delete" title="Delete project">Del</button>
+              <button class="icon-button" type="button" data-action="edit" title="Editar proyecto">Editar</button>
+              <button class="icon-button" type="button" data-action="delete" title="Eliminar proyecto">Borrar</button>
             </div>
           </header>
-          <p>${escapeHtml(project.description || "No description yet.")}</p>
+          <p>${escapeHtml(project.description || "Sin descripcion todavia.")}</p>
         </article>
       `
     )
     .join("");
+}
+
+function priorityLabel(priority) {
+  const labels = {
+    low: "Baja",
+    medium: "Media",
+    high: "Alta"
+  };
+
+  return labels[priority] || priority;
+}
+
+function statusLabel(status) {
+  const labels = {
+    active: "Activo",
+    completed: "Completado"
+  };
+
+  return labels[status] || status;
+}
+
+function emptyStateText() {
+  const labels = {
+    all: "Todavia no hay proyectos.",
+    active: "Todavia no hay proyectos activos.",
+    completed: "Todavia no hay proyectos completados."
+  };
+
+  return labels[state.filter] || "Todavia no hay proyectos.";
 }
 
 function escapeHtml(value) {

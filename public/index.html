@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -9,135 +9,135 @@
   <body>
     <div class="app-shell">
       <aside class="sidebar">
-        <a class="brand" href="/" aria-label="PulseDesk home">
+        <a class="brand" href="/" aria-label="Inicio de PulseDesk">
           <span class="brand-mark">P</span>
           <span>
             <strong>PulseDesk</strong>
-            <small>Project control</small>
+            <small>Control de proyectos</small>
           </span>
         </a>
 
-        <nav class="nav-list" aria-label="Primary">
-          <button class="nav-item is-active" type="button" data-filter="all">All projects</button>
-          <button class="nav-item" type="button" data-filter="active">Active</button>
-          <button class="nav-item" type="button" data-filter="completed">Completed</button>
+        <nav class="nav-list" aria-label="Principal">
+          <button class="nav-item is-active" type="button" data-filter="all">Todos</button>
+          <button class="nav-item" type="button" data-filter="active">Activos</button>
+          <button class="nav-item" type="button" data-filter="completed">Completados</button>
         </nav>
 
         <div class="account-card" id="accountCard" hidden>
           <span id="accountName"></span>
-          <button class="text-button" type="button" id="logoutButton">Log out</button>
+          <button class="text-button" type="button" id="logoutButton">Cerrar sesion</button>
         </div>
       </aside>
 
       <main class="main-panel">
         <section class="auth-view" id="authView">
           <div class="auth-copy">
-            <p class="eyebrow">Full stack demo</p>
-            <h1>Plan projects with a real login and a real API.</h1>
+            <p class="eyebrow">Demo full stack</p>
+            <h1>Planea proyectos con login real y una API real.</h1>
             <p>
-              Create an account, add work, track status, and deploy the whole thing to Netlify.
+              Crea una cuenta, agrega trabajo, controla el estado y despliega todo en Netlify.
             </p>
           </div>
 
           <form class="auth-form" id="authForm">
             <div class="form-header">
-              <h2 id="authTitle">Create account</h2>
-              <button class="text-button" type="button" id="toggleAuth">Sign in instead</button>
+              <h2 id="authTitle">Crear cuenta</h2>
+              <button class="text-button" type="button" id="toggleAuth">Iniciar sesion</button>
             </div>
 
             <label id="nameField">
-              <span>Name</span>
+              <span>Nombre</span>
               <input name="name" type="text" autocomplete="name" placeholder="Ada Lovelace" />
             </label>
 
             <label>
-              <span>Email</span>
+              <span>Correo</span>
               <input name="email" type="email" autocomplete="email" placeholder="ada@example.com" required />
             </label>
 
             <label>
-              <span>Password</span>
+              <span>Contrasena</span>
               <input
                 name="password"
                 type="password"
                 autocomplete="current-password"
-                placeholder="At least 8 characters"
+                placeholder="Minimo 8 caracteres"
                 required
               />
             </label>
 
             <p class="form-message" id="authMessage" role="alert"></p>
-            <button class="primary-button" type="submit" id="authSubmit">Create account</button>
+            <button class="primary-button" type="submit" id="authSubmit">Crear cuenta</button>
           </form>
         </section>
 
         <section class="dashboard-view" id="dashboardView" hidden>
           <header class="topbar">
             <div>
-              <p class="eyebrow">Workspace</p>
-              <h1>Your projects</h1>
+              <p class="eyebrow">Espacio de trabajo</p>
+              <h1>Tus proyectos</h1>
             </div>
-            <button class="primary-button" type="button" id="newProjectButton">New project</button>
+            <button class="primary-button" type="button" id="newProjectButton">Nuevo proyecto</button>
           </header>
 
-          <section class="stats-grid" aria-label="Project stats">
+          <section class="stats-grid" aria-label="Estadisticas de proyectos">
             <article>
               <span id="totalCount">0</span>
               <p>Total</p>
             </article>
             <article>
               <span id="activeCount">0</span>
-              <p>Active</p>
+              <p>Activos</p>
             </article>
             <article>
               <span id="completedCount">0</span>
-              <p>Completed</p>
+              <p>Completados</p>
             </article>
           </section>
 
           <section class="workspace">
             <form class="project-form" id="projectForm">
               <div class="form-header">
-                <h2 id="projectFormTitle">Add project</h2>
-                <button class="text-button" type="button" id="cancelEditButton" hidden>Cancel</button>
+                <h2 id="projectFormTitle">Agregar proyecto</h2>
+                <button class="text-button" type="button" id="cancelEditButton" hidden>Cancelar</button>
               </div>
 
               <label>
-                <span>Title</span>
-                <input name="title" type="text" placeholder="Launch portfolio site" required />
+                <span>Titulo</span>
+                <input name="title" type="text" placeholder="Lanzar sitio de portafolio" required />
               </label>
 
               <label>
-                <span>Description</span>
-                <textarea name="description" rows="4" placeholder="Scope, notes, next steps"></textarea>
+                <span>Descripcion</span>
+                <textarea name="description" rows="4" placeholder="Alcance, notas, siguientes pasos"></textarea>
               </label>
 
               <div class="form-row">
                 <label>
-                  <span>Priority</span>
+                  <span>Prioridad</span>
                   <select name="priority">
-                    <option value="low">Low</option>
-                    <option value="medium" selected>Medium</option>
-                    <option value="high">High</option>
+                    <option value="low">Baja</option>
+                    <option value="medium" selected>Media</option>
+                    <option value="high">Alta</option>
                   </select>
                 </label>
 
                 <label>
-                  <span>Due date</span>
+                  <span>Fecha limite</span>
                   <input name="dueDate" type="date" />
                 </label>
               </div>
 
               <label>
-                <span>Status</span>
+                <span>Estado</span>
                 <select name="status">
-                  <option value="active" selected>Active</option>
-                  <option value="completed">Completed</option>
+                  <option value="active" selected>Activo</option>
+                  <option value="completed">Completado</option>
                 </select>
               </label>
 
               <p class="form-message" id="projectMessage" role="alert"></p>
-              <button class="primary-button" type="submit" id="projectSubmit">Save project</button>
+              <button class="primary-button" type="submit" id="projectSubmit">Guardar proyecto</button>
             </form>
 
             <section class="project-list" id="projectList" aria-live="polite"></section>

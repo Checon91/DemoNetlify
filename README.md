@@ -1,19 +1,19 @@
 # PulseDesk
 
-PulseDesk is a complete Netlify-ready full-stack app built with Node, Express, JavaScript, JWT auth, and a small database layer.
+PulseDesk es una app full stack lista para Netlify, creada con Node, Express, JavaScript, autenticacion JWT y una capa sencilla de base de datos.
 
-The frontend is static HTML/CSS/JS in `public/`. The backend is an Express API deployed as a Netlify Function in `netlify/functions/api.js`. Data is stored in Netlify Blobs on Netlify and in a local JSON file during development.
+El frontend es HTML/CSS/JS estatico dentro de `public/`. El backend es una API de Express desplegada como Netlify Function en `netlify/functions/api.js`. Los datos se guardan en Netlify Blobs en produccion y en un archivo JSON local durante desarrollo.
 
-## Features
+## Funcionalidades
 
-- Register and login with hashed passwords.
-- JWT-protected API routes.
-- Create, edit, complete, reopen, and delete projects.
-- Dashboard stats and filtering.
-- Netlify deploy config included.
-- Local development server included.
+- Registro e inicio de sesion con contrasenas encriptadas.
+- Rutas de API protegidas con JWT.
+- Crear, editar, completar, reabrir y eliminar proyectos.
+- Estadisticas y filtros en el dashboard.
+- Configuracion de deploy en Netlify incluida.
+- Servidor local de desarrollo incluido.
 
-## Run Locally
+## Ejecutar Localmente
 
 ```bash
 npm install
@@ -21,31 +21,31 @@ cp .env.example .env
 npm run dev
 ```
 
-Then open:
+Despues abre:
 
 ```text
 http://localhost:8888
 ```
 
-Local data is saved in `.data/db.json`, which is ignored by git.
+Los datos locales se guardan en `.data/db.json`, que Git ignora.
 
-## Deploy To Netlify
+## Deploy En Netlify
 
-1. Push this folder to GitHub.
-2. Create a new Netlify site from that repository.
-3. Set the build command to `npm run build`.
-4. Set the publish directory to `public`.
-5. Add this environment variable in Netlify:
+1. Sube esta carpeta a GitHub.
+2. Crea un nuevo sitio en Netlify desde ese repositorio.
+3. Usa `npm run build` como build command.
+4. Usa `public` como publish directory.
+5. Agrega esta variable de entorno en Netlify:
 
 ```text
-JWT_SECRET=your-long-random-production-secret
+JWT_SECRET=tu-secreto-largo-y-seguro-de-produccion
 ```
 
-Netlify will run the Express API as a serverless function and use Netlify Blobs for hosted storage.
+Netlify ejecutara la API de Express como serverless function y usara Netlify Blobs como almacenamiento.
 
 ## API
 
-All endpoints are under `/api`.
+Todos los endpoints estan bajo `/api`.
 
 - `POST /auth/register`
 - `POST /auth/login`
@@ -56,8 +56,8 @@ All endpoints are under `/api`.
 - `DELETE /projects/:id`
 - `GET /health`
 
-Authenticated requests need:
+Las solicitudes autenticadas necesitan:
 
 ```text
-Authorization: Bearer your-jwt-token
+Authorization: Bearer tu-token-jwt
 ```

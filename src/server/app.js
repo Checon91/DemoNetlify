@@ -59,7 +59,7 @@ function createApp() {
       const token = header.startsWith("Bearer ") ? header.slice(7) : "";
 
       if (!token) {
-        return res.status(401).json({ message: "Authentication required." });
+        return res.status(401).json({ message: "Necesitas iniciar sesion." });
       }
 
       const payload = verifyToken(token);
@@ -67,13 +67,13 @@ function createApp() {
       const user = data.users.find((item) => item.id === payload.sub);
 
       if (!user) {
-        return res.status(401).json({ message: "User no longer exists." });
+        return res.status(401).json({ message: "El usuario ya no existe." });
       }
 
       req.user = user;
       next();
     } catch (error) {
-      return res.status(401).json({ message: "Invalid or expired token." });
+      return res.status(401).json({ message: "Token invalido o expirado." });
     }
   }
 
@@ -93,15 +93,15 @@ function createApp() {
       const password = String(req.body.password || "");
 
       if (name.length < 2) {
-        return res.status(400).json({ message: "Name must be at least 2 characters." });
+        return res.status(400).json({ message: "El nombre debe tener al menos 2 caracteres." });
       }
 
       if (!isValidEmail(email)) {
-        return res.status(400).json({ message: "Enter a valid email address." });
+        return res.status(400).json({ message: "Ingresa un correo valido." });
       }
 
       if (password.length < 8) {
-        return res.status(400).json({ message: "Password must be at least 8 characters." });
+        return res.status(400).json({ message: "La contrasena debe tener al menos 8 caracteres." });
       }
 
       let createdUser;
@@ -110,7 +110,7 @@ function createApp() {
         const existing = data.users.some((user) => user.email === email);
 
         if (existing) {
-          const error = new Error("An account with that email already exists.");
+          const error = new Error("Ya existe una cuenta con ese correo.");
           error.status = 409;
           throw error;
         }
@@ -143,7 +143,7 @@ function createApp() {
       const user = data.users.find((item) => item.email === email);
 
       if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
-        return res.status(401).json({ message: "Email or password is incorrect." });
+        return res.status(401).json({ message: "El correo o la contrasena son incorrectos." });
       }
 
       res.json({
@@ -181,7 +181,7 @@ function createApp() {
       const input = cleanProjectInput(req.body);
 
       if (input.title.length < 3) {
-        return res.status(400).json({ message: "Project title must be at least 3 characters." });
+        return res.status(400).json({ message: "El titulo del proyecto debe tener al menos 3 caracteres." });
       }
 
       let project;
@@ -212,7 +212,7 @@ function createApp() {
       const input = cleanProjectInput(req.body);
 
       if (input.title.length < 3) {
-        return res.status(400).json({ message: "Project title must be at least 3 characters." });
+        return res.status(400).json({ message: "El titulo del proyecto debe tener al menos 3 caracteres." });
       }
 
       let updatedProject;
@@ -223,7 +223,7 @@ function createApp() {
         );
 
         if (!project) {
-          const error = new Error("Project not found.");
+          const error = new Error("Proyecto no encontrado.");
           error.status = 404;
           throw error;
         }
@@ -251,7 +251,7 @@ function createApp() {
         );
 
         if (data.projects.length === before) {
-          const error = new Error("Project not found.");
+          const error = new Error("Proyecto no encontrado.");
           error.status = 404;
           throw error;
         }
@@ -264,7 +264,7 @@ function createApp() {
   );
 
   app.use((req, res) => {
-    res.status(404).json({ message: "Route not found." });
+    res.status(404).json({ message: "Ruta no encontrada." });
   });
 
   app.use((error, req, res, next) => {
@@ -275,7 +275,7 @@ function createApp() {
     }
 
     res.status(status).json({
-      message: error.message || "Something went wrong."
+      message: error.message || "Algo salio mal."
     });
   });
 
